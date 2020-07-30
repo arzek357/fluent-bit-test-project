@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<included>
+    <appender name="fluency_sync" class="ch.qos.logback.more.appenders.FluencyLogbackAppender">
+        <tag>mfrom</tag>
+        <remoteServers>
+            <remoteServer>
+                <host>192.168.1.197</host>
+                <port>24224</port>
+            </remoteServer>
+        </remoteServers>
+
+        <ackResponseMode>false</ackResponseMode>
+        <fileBackupDir>/tmp</fileBackupDir>
+        <bufferChunkInitialSize>2097152</bufferChunkInitialSize>
+        <bufferChunkRetentionSize>16777216</bufferChunkRetentionSize>
+        <maxBufferSize>268435456</maxBufferSize>
+        <connectionTimeoutMilli>5000</connectionTimeoutMilli>
+        <readTimeoutMilli>5000</readTimeoutMilli>
+        <waitUntilBufferFlushed>30</waitUntilBufferFlushed>
+        <waitUntilFlusherTerminated>40</waitUntilFlusherTerminated>
+        <flushAttemptIntervalMillis>200</flushAttemptIntervalMillis>
+        <senderMaxRetryCount>12</senderMaxRetryCount>
+        <useEventTime>true</useEventTime>
+        <sslEnabled>false</sslEnabled>
+        <flattenMapMarker>false</flattenMapMarker>
+        <encoder>
+            <pattern><![CDATA[%date{HH:mm:ss.SSS} [%thread] %-5level %logger{15}#%line %message]]></pattern>
+        </encoder>
+    </appender>
+
+    <appender name="fluency" class="ch.qos.logback.classic.AsyncAppender">
+        <queueSize>999</queueSize>
+        <neverBlock>true</neverBlock>
+        <maxFlushTime>10000</maxFlushTime>
+        <appender-ref ref="fluency_sync" />
+    </appender>
+</included>
